@@ -1,19 +1,19 @@
 class Calendar{
-    constructor(tableId,days=[],hours={},eventColor){
-        this.tableId = tableId;
+    constructor(table_Id,days=[],hours={},eventColor){
+        this.table_Id = table_Id;
         this.days = days;
         this.hours = hours;
         this.eventColor = eventColor;
     }
 
     set data(data){
-        if(!localStorage[this.tableId]){
-            localStorage.setItem(this.tableId, JSON.stringify(data) );
+        if(!localStorage[this.table_Id]){
+            localStorage.setItem(this.table_Id, JSON.stringify(data) );
         }
     }
 
     get data(){
-        return JSON.parse(localStorage[this.tableId]);
+        return JSON.parse(localStorage[this.table_Id]);
     }
 
     render_Calendar(){
@@ -49,6 +49,16 @@ class Calendar{
 
         let meeting_room = document.querySelector('#meeting_room');
 
+        let user_select = this.render_Users();
+        let addEventBtn = `<a class="btn" href="addEvent.html?calendar=${this.table_Id}" target="_blank">Add event</a>`;
+
+        let calendar__options = document.createElement('div');
+        calendar__options.classList.add('calendar__options');
+
+        calendar__options.append(user_select);
+        calendar__options.innerHTML += addEventBtn;
+
+        meeting_room.append(calendar__options);
         meeting_room.innerHTML += table;
     }
 
@@ -170,12 +180,12 @@ class Calendar{
         current_TD.innerHTML = ``;
     }
 }
+
 let calendars = {
     roomGreen: new Calendar('roomGreen',['monday','tuesday','wednesday','thursday','friday'],{start: 10,end: 18},'#62d44d'),
     //roomRed: new Calendar('roomRed',['monday','tuesday','wednesday','thursday','friday'],{start: 10,end: 18},'#a41b28'),
     //roomPurple: new Calendar('roomPurple',['monday','tuesday','wednesday','thursday','friday'],{start: 10,end: 18},'#781e77')
 }
-
 
 let calendarsData = {
     roomGreen: {
@@ -244,14 +254,17 @@ let calendarsData = {
     // }
 }
 
+
 for(let calendar in calendars){
     calendars[calendar].data = calendarsData[calendar];
     calendars[calendar].render_Calendar();
     Calendar.infoCalendar(calendars[calendar]);
-    //console.log(calendars[calendar]);
+    console.log(calendars[calendar]);
 }
 
 //console.log(calendars);
+
+
 
 function generate_ID(length=10) {
     let result = '',
@@ -279,6 +292,7 @@ selectUsers
             Calendar.userEvents(select);
         });
     });
+
 
 
 
