@@ -11,3 +11,4 @@ To add Yor event press the link on the top of the table "Add event":
 	type the name of meeting
 	select your name (multiple choice) 
 	
+# calendar
